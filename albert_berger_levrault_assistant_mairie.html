@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full bg-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Albert x Berger-Levrault - Assistant Souverain Mairie</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bl: {
+                            red: '#E30613',       /* Berger-Levrault Primary Red */
+                            darkRed: '#9E0008',   /* Deep Red / Accent */
+                            lightRed: '#FDE8E8',  /* Light Red Tint */
+                            hoverRed: '#C40410',
+                        },
+                        rf: {
+                            blue: '#000091',
+                            red: '#E1000F'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .bl-gradient {
+            background: linear-gradient(135deg, #E30613 0%, #9E0008 100%);
+        }
+        .bl-shadow {
+            box-shadow: 0 4px 20px -2px rgba(227, 6, 19, 0.15);
+        }
+    </style>
+</head>
+<body class="h-full font-sans text-slate-800 bg-slate-100 flex flex-col antialiased overflow-hidden">
+
+    <!-- Top Bar / Official Institutional Header -->
+    <header class="bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between shrink-0 shadow-sm z-30">
+        <div class="flex items-center space-x-5">
+            <!-- Official RF Marianne Block -->
+            <div class="flex items-center space-x-3 pr-4 border-r border-slate-300">
+                <div class="flex flex-col text-[10px] uppercase font-bold tracking-tighter leading-tight text-slate-900 border-l-2 border-rf-blue pl-2">
+                    <span class="text-rf-blue">RÉPUBLIQUE</span>
+                    <span class="text-slate-800">FRANÇAISE</span>
+                    <span class="text-rf-red text-[8px] tracking-normal font-medium">Liberté · Égalité · Fraternité</span>
+                </div>
+            </div>
+
+            <!-- Berger-Levrault x Albert Co-branding -->
+            <div class="flex items-center gap-3">
+                <div class="bg-bl-red text-white font-black px-2.5 py-1 rounded text-base tracking-tighter shadow-sm flex items-center gap-1">
+                    <span>BL</span>
+                    <span class="text-[10px] font-normal bg-white/20 px-1 py-0.5 rounded uppercase">Berger-Levrault</span>
+                </div>
+                <div class="h-6 w-px bg-slate-300"></div>
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-red-50 border border-bl-red/30 flex items-center justify-center text-bl-red">
+                        <i data-lucide="bot" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-slate-900 text-sm tracking-tight">ALBERT MAIRIE</span>
+                            <span class="bg-red-100 text-bl-darkRed border border-bl-red/20 text-[10px] font-semibold px-2 py-0.5 rounded-full">Progiciel Métier v4.2</span>
+                        </div>
+                        <p class="text-[10px] text-slate-500 font-medium">Assistant Souverain Intégré - Gestion Communale</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security & Municipal Context -->
+        <div class="flex items-center space-x-4">
+            <div class="hidden lg:flex items-center gap-2 bg-red-50 border border-bl-red/20 px-3 py-1 rounded-full text-bl-darkRed text-xs font-medium">
+                <span class="w-2 h-2 rounded-full bg-bl-red animate-pulse"></span>
+                <i data-lucide="shield-alert" class="w-3.5 h-3.5 text-bl-red"></i>
+                <span>Module Données Sensibles RGPD & État Civil</span>
+            </div>
+
+            <div class="flex items-center gap-2 border-l border-slate-200 pl-4">
+                <div class="w-8 h-8 rounded-full bg-bl-red text-white flex items-center justify-center font-bold text-xs shadow-sm">
+                    M
+                </div>
+                <div class="hidden sm:block text-left text-xs">
+                    <div class="font-bold text-slate-800">Mairie de Saint-Martin</div>
+                    <div class="text-[10px] text-slate-500">Service Affaires Générales & CCAS</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <div class="flex flex-1 overflow-hidden">
+
+        <!-- Sidebar Navigation & Sensitive Templates -->
+        <aside class="w-80 bg-white border-r border-slate-200 flex flex-col shrink-0 hidden md:flex">
+            <!-- New Chat Action Button -->
+            <div class="p-4 border-b border-slate-100">
+                <button onclick="resetChat()" class="w-full bg-bl-red hover:bg-bl-hoverRed text-white font-medium py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 text-sm transition-all shadow-sm">
+                    <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                    Nouvelle requête Mairie
+                </button>
+            </div>
+
+            <!-- Category Filter for Sensitive Municipal Prompts -->
+            <div class="p-3 bg-slate-50 border-b border-slate-200">
+                <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                    <i data-lucide="folder-lock" class="w-3.5 h-3.5 text-bl-red"></i>
+                    Cas d'usage Données Sensibles
+                </div>
+                <div class="grid grid-cols-1 gap-1">
+                    <button onclick="filterPrompts('all')" class="text-left px-2.5 py-1.5 rounded text-xs font-medium bg-white text-slate-800 border border-slate-200 hover:border-bl-red transition-all">
+                        Tous les dossiers communaux
+                    </button>
+                </div>
+            </div>
+
+            <!-- Prompts List Section -->
+            <div class="flex-1 overflow-y-auto p-3 space-y-2">
+                
+                <!-- Prompt Card 1: CCAS Aide Urgence (Multi-line prompt example) -->
+                <div onclick="loadPrompt('ccas_urgence')" class="p-3 rounded-xl bg-white border border-slate-200 hover:border-bl-red hover:shadow-md transition-all cursor-pointer group relative">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-[10px] font-bold bg-red-100 text-bl-red px-2 py-0.5 rounded-full uppercase">Action Sociale / CCAS</span>
+                        <i data-lucide="lock" class="w-3 h-3 text-bl-red"></i>
+                    </div>
+                    <h4 class="text-xs font-bold text-slate-800 group-hover:text-bl-red transition-colors mb-1">
+                        Secours financier d'urgence & NIR
+                    </h4>
+                    <p class="text-[11px] text-slate-500 line-clamp-2 leading-tight">
+                        Traitement demande aide CCAS avec masquage automatique du N° de Sécurité Sociale et évaluation vulnérabilité.
+                    </p>
+                </div>
+
+                <!-- Prompt Card 2: État Civil & Titres de Séjour (Multi-line prompt example) -->
+                <div onclick="loadPrompt('etat_civil')" class="p-3 rounded-xl bg-white border border-slate-200 hover:border-bl-red hover:shadow-md transition-all cursor-pointer group relative">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full uppercase">État Civil & Titres</span>
+                        <i data-lucide="file-key-2" class="w-3 h-3 text-amber-600"></i>
+                    </div>
+                    <h4 class="text-xs font-bold text-slate-800 group-hover:text-bl-red transition-colors mb-1">
+                        Contestation Acte Naissance & Filiation
+                    </h4>
+                    <p class="text-[11px] text-slate-500 line-clamp-2 leading-tight">
+                        Analyse juridique sur la transmission de copies intégrales d'actes d'état civil avec mentions marginales sensibles.
+                    </p>
+                </div>
+
+                <!-- Prompt Card 3: Conseil Municipal Délibération XML -->
+                <div onclick="loadPrompt('deliberation_xml')" class="p-3 rounded-xl bg-white border border-slate-200 hover:border-bl-red hover:shadow-md transition-all cursor-pointer group relative">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-[10px] font-bold bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full uppercase">Délibération & XML</span>
+                        <i data-lucide="code" class="w-3 h-3 text-blue-600"></i>
+                    </div>
+                    <h4 class="text-xs font-bold text-slate-800 group-hover:text-bl-red transition-colors mb-1">
+                        Projet Délibération & Export XML
+                    </h4>
+                    <p class="text-[11px] text-slate-500 line-clamp-2 leading-tight">
+                        Rédaction arrêté du Maire + génération d'un schéma XML structuré pour le logiciel Berger-Levrault e-Actes.
+                    </p>
+                </div>
+
+                <!-- Prompt Card 4: Fichier Électoral & Données Personnelles -->
+                <div onclick="loadPrompt('electoral')" class="p-3 rounded-xl bg-white border border-slate-200 hover:border-bl-red hover:shadow-md transition-all cursor-pointer group relative">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-[10px] font-bold bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full uppercase">Élections / REU</span>
+                        <i data-lucide="shield-check" class="w-3 h-3 text-purple-600"></i>
+                    </div>
+                    <h4 class="text-xs font-bold text-slate-800 group-hover:text-bl-red transition-colors mb-1">
+                        Radiation Répertoire Électoral Unique
+                    </h4>
+                    <p class="text-[11px] text-slate-500 line-clamp-2 leading-tight">
+                        Notification de radiation pour perte de droits civiques avec respect strict de la confidentialité RGPD.
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Footer Compliance Info -->
+            <div class="p-3 border-t border-slate-200 bg-slate-50 text-[11px] text-slate-600 space-y-1">
+                <div class="flex items-center justify-between font-bold text-slate-700">
+                    <span>Hébergement Souverain :</span>
+                    <span class="text-bl-red font-mono">Berger-Levrault Cloud</span>
+                </div>
+                <div class="text-[10px] text-slate-500">
+                    Certifié SecNumCloud · Données hébergées exclusivement en France (MIG-DINUM).
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="flex-1 flex flex-col bg-slate-50 relative overflow-hidden">
+
+            <!-- Security Banner -->
+            <div class="bg-bl-red text-white px-4 py-2 text-xs flex items-center justify-between shrink-0 shadow-sm">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="shield-alert" class="w-4 h-4 text-white"></i>
+                    <span class="font-medium">AVERTISSEMENT SÉCURITÉ MAIRIE :</span>
+                    <span class="opacity-90 hidden sm:inline">Les données traitées dans cet espace bénéficient du chiffrement de bout en bout conforme au Référentiel Général de Sécurité (RGS v2).</span>
+                </div>
+                <span class="bg-white/20 font-mono text-[10px] px-2 py-0.5 rounded uppercase tracking-wider font-semibold">Niveau d'Accès : Agent Titulaire</span>
+            </div>
+
+            <!-- Chat Messages Container -->
+            <div id="chatMessages" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
+
+                <!-- Welcome Message from Albert Berger-Levrault -->
+                <div class="flex gap-4 max-w-4xl">
+                    <div class="w-9 h-9 rounded-xl bg-bl-red text-white flex items-center justify-center shrink-0 shadow-md font-bold text-sm">
+                        BL
+                    </div>
+                    <div class="flex-1 space-y-2">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold text-slate-900">Albert Mairie (Berger-Levrault)</span>
+                            <span class="text-[10px] text-slate-400">09:00</span>
+                        </div>
+                        <div class="bg-white border border-slate-200 rounded-2xl p-5 text-sm text-slate-700 leading-relaxed shadow-sm space-y-3">
+                            <p class="font-semibold text-slate-900">
+                                Bonjour. Je suis votre assistant métier Albert, spécialement paramétré pour les services communaux et intercommunaux Berger-Levrault.
+                            </p>
+                            <p>
+                                Je suis pré-entraîné sur les réglementations applicables aux collectivités territoriales (CGCT, CRPA, Code de l'Urbanisme, Code de l'Action Sociale et des Familles) et configuré pour gérer le traitement sécurisé des **données sensibles en Mairie**.
+                            </p>
+                            <div class="bg-red-50 border-l-4 border-bl-red p-3 rounded-r-lg text-xs text-bl-darkRed font-medium">
+                                <i data-lucide="info" class="w-4 h-4 inline mr-1 text-bl-red"></i>
+                                Cliquez sur un modèle de prompt multi-lignes dans le panneau de gauche pour charger directement une étude de cas d'urgence avec export de données structurées XML.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Default Initial Multi-Line Sensitive Example -->
+                <div class="flex gap-4 max-w-4xl ml-auto justify-end">
+                    <div class="flex-1 space-y-2 text-right">
+                        <div class="flex items-center gap-2 justify-end">
+                            <span class="text-[10px] text-slate-400">09:02</span>
+                            <span class="text-xs font-bold text-slate-700">Agent CCAS / Mairie</span>
+                        </div>
+                        <div class="bg-slate-800 text-white border border-slate-700 rounded-2xl p-4 text-sm leading-relaxed inline-block text-left shadow-sm">
+                            <p class="font-mono text-xs text-red-300 mb-1">[DONNÉES SENSIBLES / CCAS MAIRIE]</p>
+                            <p class="whitespace-pre-line text-xs font-sans">Monsieur le Maire est saisi d'une demande de secours financier d'urgence pour la famille DUPONT.
+Le dossier comporte des données médicales sensibles ainsi que le N° de Sécurité Sociale (NIR : 1 82 05 75 123 456 78).
+Merci de :
+1. Rédiger le projet de décision du CCAS en anonymisant les données médicales et le NIR.
+2. Formuler le texte de la délibération officielle.
+3. Générer le fichier de transmission XML compatible avec le logiciel Berger-Levrault e-CCAS.</p>
+                        </div>
+                    </div>
+                    <div class="w-9 h-9 rounded-xl bg-slate-700 text-white flex items-center justify-center shrink-0 font-bold text-xs shadow-sm">
+                        AG
+                    </div>
+                </div>
+
+                <!-- AI Generated Response Container -->
+                <div class="flex gap-4 max-w-4xl" id="initialAiResponse">
+                    <div class="w-9 h-9 rounded-xl bg-bl-red text-white flex items-center justify-center shrink-0 shadow-md font-bold text-sm">
+                        BL
+                    </div>
+                    <div class="flex-1 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-bold text-slate-900">Albert Mairie</span>
+                                <span class="bg-red-100 text-bl-red border border-bl-red/20 text-[10px] font-bold px-2 py-0.5 rounded">Action Sociale · CCAS</span>
+                            </div>
+                            <!-- Actions -->
+                            <div class="flex items-center gap-2">
+                                <button onclick="copyText('response-content-1')" class="px-2.5 py-1 bg-white border border-slate-300 hover:border-slate-400 text-slate-700 text-xs rounded-lg flex items-center gap-1.5 transition-all shadow-sm">
+                                    <i data-lucide="copy" class="w-3.5 h-3.5 text-slate-500"></i>
+                                    Copier
+                                </button>
+                                <button onclick="downloadXmlFile()" class="px-2.5 py-1 bg-bl-red hover:bg-bl-hoverRed text-white text-xs rounded-lg font-medium flex items-center gap-1.5 transition-all shadow-sm">
+                                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                                    Télécharger Fichier XML (.xml)
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bg-white border border-slate-200 rounded-2xl p-5 text-sm text-slate-800 leading-relaxed space-y-4 shadow-sm" id="response-content-1">
+                            
+                            <!-- Sensitive Data Masking Alert -->
+                            <div class="bg-amber-50 border-l-4 border-amber-500 p-3 rounded-r-lg text-xs text-amber-900 space-y-1">
+                                <div class="font-bold flex items-center gap-1">
+                                    <i data-lucide="shield-check" class="w-4 h-4 text-amber-600"></i>
+                                    MASQUAGE ET PROTECTION AUTOMATIQUE DES DONNÉES SENSIBLES (RGPD)
+                                </div>
+                                <p class="text-[11px] text-amber-800">
+                                    - Numéro de Sécurité Sociale (NIR) d'origine : <code class="bg-amber-200/60 px-1 py-0.5 rounded text-amber-900">1 82 05 75 123 *** **</code> (Crypté/Pseudonymisé)<br>
+                                    - Données de santé : Transformées sous l'appellation générique <em>"Raison de santé justifiant une incapacité temporaire de travail"</em> conformément au Secret Médical (Art. L.1110-4 CSP).
+                                </p>
+                            </div>
+
+                            <!-- Official Draft Document -->
+                            <div class="border border-slate-200 rounded-xl p-4 bg-slate-50/50 space-y-3">
+                                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                                    <span class="text-xs font-bold text-bl-red uppercase">RÉPUBLIQUE FRANÇAISE - VILLE DE SAINT-MARTIN</span>
+                                    <span class="text-[10px] font-mono bg-slate-200 text-slate-700 px-2 py-0.5 rounded">CCAS-DEC-2026-089</span>
+                                </div>
+
+                                <div class="font-serif text-xs text-slate-800 space-y-2">
+                                    <p class="font-bold">PROJET DE DÉCISION DU PRÉSIDENT DU CCAS</p>
+                                    <p><strong>Objet :</strong> Attribution d'un secours financier exceptionnel sous condition d'anonymat restreint.</p>
+                                    <p><strong>Le Président du CCAS de Saint-Martin,</strong></p>
+                                    <p>Vu le Code de l'Action Sociale et des Familles, notamment les articles L. 123-4 à L. 123-9 ;</p>
+                                    <p>Vu le règlement intérieur d'attribution des aides facultatives du CCAS ;</p>
+                                    <p>Considérant l'évaluation sociale transmise sous la référence confidentielle **DOS-8923** attestant d'une rupture brutale de ressources liée à des événements de vie médicaux ;</p>
+                                    
+                                    <p class="pt-2 font-bold">DÉCIDE :</p>
+                                    <p><strong>Article 1er :</strong> Une aide financière d'urgence d'un montant de **450,00 €** est accordée au foyer DUPONT (Réf dossier : CCAS-8923) pour le paiement direct des factures d'énergie.</p>
+                                    <p><strong>Article 2 :</strong> La dépense sera imputée sur le chapitre 65, article 6568 du budget du CCAS.</p>
+                                </div>
+                            </div>
+
+                            <!-- XML Schema Preview Box -->
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                                        <i data-lucide="file-code" class="w-4 h-4 text-bl-red"></i>
+                                        Aperçu de la structure XML (Berger-Levrault e-CCAS Standard)
+                                    </span>
+                                    <span class="text-[10px] font-mono text-slate-400">encodage: UTF-8</span>
+                                </div>
+                                <pre class="bg-slate-900 text-red-300 p-3.5 rounded-xl text-[11px] font-mono overflow-x-auto leading-tight max-h-48"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;DeliberationCCAS xmlns="http://www.berger-levrault.fr/eCCAS/v4"&gt;
+  &lt;Entete&gt;
+    &lt;CodeCollectivite&gt;75000&lt;/CodeCollectivite&gt;
+    &lt;NomMairie&gt;Saint-Martin&lt;/NomMairie&gt;
+    &lt;NumeroDossier&gt;CCAS-DEC-2026-089&lt;/NumeroDossier&gt;
+    &lt;DateActe&gt;2026-09-21&lt;/DateActe&gt;
+  &lt;/Entete&gt;
+  &lt;Beneficiaire Anonymise="true"&gt;
+    &lt;IDDossierSocial&gt;DOS-8923&lt;/IDDossierSocial&gt;
+    &lt;NomFamille&gt;DUPONT&lt;/NomFamille&gt;
+    &lt;StatutNIR&gt;MASQUE_CONFORME_RGPD&lt;/StatutNIR&gt;
+  &lt;/Beneficiaire&gt;
+  &lt;Decision&gt;
+    &lt;TypeAide&gt;Secours Financier Urgence&lt;/TypeAide&gt;
+    &lt;MontantAccordes devise="EUR"&gt;450.00&lt;/MontantAccordes&gt;
+    &lt;ImputationBudgetaire&gt;6568&lt;/ImputationBudgetaire&gt;
+  &lt;/Decision&gt;
+&lt;/DeliberationCCAS&gt;</code></pre>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Input Area with Multi-Line Support -->
+            <div class="p-4 bg-white border-t border-slate-200 relative z-20 shadow-md">
+                
+                <!-- Quick Prompt Chips -->
+                <div class="flex items-center gap-2 overflow-x-auto pb-2.5 text-xs no-scrollbar">
+                    <span class="text-[11px] font-bold text-slate-500 shrink-0 flex items-center gap-1">
+                        <i data-lucide="zap" class="w-3.5 h-3.5 text-bl-red"></i> Exemples Mairie :
+                    </span>
+                    <button onclick="appendPromptText('Vérifier si le N° Insee/NIR reçu par courriel usager respecte le protocole RGPD Mairie.')" class="bg-slate-100 hover:bg-red-50 border border-slate-200 hover:border-bl-red text-slate-700 hover:text-bl-red px-2.5 py-1 rounded-full whitespace-nowrap transition-all text-[11px]">
+                        Contrôle RGPD / NIR
+                    </button>
+                    <button onclick="appendPromptText('Rédiger une réponse négative suite à une demande d\'acte d'état-civil par un tiers non autorisé.')" class="bg-slate-100 hover:bg-red-50 border border-slate-200 hover:border-bl-red text-slate-700 hover:text-bl-red px-2.5 py-1 rounded-full whitespace-nowrap transition-all text-[11px]">
+                        Refus Acte Tiers Non Autorisé
+                    </button>
+                    <button onclick="appendPromptText('Générer le flux XML de transfert pour délibération de conseil municipal au préfet.')" class="bg-slate-100 hover:bg-red-50 border border-slate-200 hover:border-bl-red text-slate-700 hover:text-bl-red px-2.5 py-1 rounded-full whitespace-nowrap transition-all text-[11px]">
+                        Export XML e-Actes Préfecture
+                    </button>
+                </div>
+
+                <!-- Input Box -->
+                <div class="relative bg-slate-50 border border-slate-300 focus-within:border-bl-red focus-within:bg-white rounded-2xl p-3 transition-all shadow-inner">
+                    <textarea id="promptInput" rows="3" class="w-full bg-transparent text-slate-800 placeholder-slate-400 text-sm focus:outline-none resize-y leading-relaxed font-sans" placeholder="Saisissez votre prompt ou requête multi-lignes pour la Mairie (ex: rédaction d'arrêté, analyse de données sensibles, préparation d'export XML)..."></textarea>
+                    
+                    <div class="flex items-center justify-between pt-2 border-t border-slate-200 mt-2">
+                        <div class="flex items-center gap-3 text-xs text-slate-500">
+                            <span class="flex items-center gap-1 text-emerald-700 font-medium">
+                                <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-600"></i> Serveurs Berger-Levrault France
+                            </span>
+                            <span class="hidden md:inline text-slate-400">|</span>
+                            <span class="hidden md:inline text-slate-400">Majuscule + Entrée pour nouvelle ligne</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-2">
+                            <button onclick="clearInput()" class="text-slate-400 hover:text-slate-600 p-2 rounded-lg hover:bg-slate-200 transition-colors" title="Effacer le texte">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                            <button onclick="sendMessage()" id="sendBtn" class="bg-bl-red hover:bg-bl-hoverRed text-white px-4 py-2 rounded-xl font-medium text-xs flex items-center gap-2 transition-all shadow-sm">
+                                <span>Lancer Albert</span>
+                                <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between text-[10px] text-slate-400 mt-2 px-1">
+                    <span>Partenariat DINUM / Albert · Logiciels Métiers Berger-Levrault</span>
+                    <span>Conforme CGCT & Normes d'Accessibilité RGAA</span>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Toast Message Container -->
+    <div id="toast" class="fixed bottom-20 right-6 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 text-xs transform translate-y-10 opacity-0 transition-all pointer-events-none z-50 border border-slate-700">
+        <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+        <span id="toastMessage">Action effectuée avec succès.</span>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Multi-line Prompt Dataset with Rich Municipal Contexts
+        const promptTemplates = {
+            ccas_urgence: `[DONNÉES SENSIBLES / CCAS MAIRIE]
+Monsieur le Maire est saisi d'une demande de secours financier d'urgence pour la famille DUPONT.
+Le dossier comporte des données médicales sensibles ainsi que le N° de Sécurité Sociale (NIR : 1 82 05 75 123 456 78).
+
+Merci de :
+1. Rédiger le projet de décision du CCAS en anonymisant les données médicales et le NIR.
+2. Formuler le texte de la délibération officielle.
+3. Générer le fichier de transmission XML compatible avec le logiciel Berger-Levrault e-CCAS.`,
+
+            etat_civil: `[ÉTAT CIVIL MAIRIE / DEMANDE DE TIERS SENSIBLE]
+Un usager sollicite la copie intégrale de l'acte de naissance de son supposé demi-frère (M. Marc MOREAU, né le 14/03/1984 à Saint-Martin).
+Le demandeur ne fournit pas de preuve d'ascendance directe ni de procuration.
+
+Consignes pour Albert :
+1. Rappeler la réglementation sur la délivrance des actes d'état civil (Art. 29 du Décret n°2017-890).
+2. Rédiger la lettre de refus courtoise mais stricte.
+3. Générer l'extrait XML d'enregistrement du refus pour le registre communal d'état civil.`,
+
+            deliberation_xml: `[DÉLIBÉRATION CONSEIL MUNICIPAL & ACTES REGLEMENTAIRES]
+Projet d'installation de caméras de vidéoprotection aux abords des écoles communales.
+
+Traiter la demande :
+1. Rédiger les motifs de la délibération (Sécurité des élèves & conciliation avec la protection de la vie privée).
+2. Structurer le texte complet du projet d'arrêté à soumettre au vote du Conseil Municipal.
+3. Exporter le schéma XML complet conforme au format Berger-Levrault e-Actes pour télétransmission en Préfecture.`,
+
+            electoral: `[RÉPERTOIRE ÉLECTORAL UNIQUE - REU SENSIBLE]
+Avis de perte de droits civiques transmis par le Parquet concernant M. Robert DURAND.
+
+Actions requises :
+1. Rédiger la décision administrative de radiation des listes électorales communales.
+2. Formuler la notification formelle à envoyer à l'intéressé sous pli recommandé.
+3. Exporter le fichier d'incrémentation XML du logiciel électoral.`
+        };
+
+        // Current Active XML snippet for download
+        let currentXmlContent = `<?xml version="1.0" encoding="UTF-8"?>
+<DeliberationCCAS xmlns="http://www.berger-levrault.fr/eCCAS/v4">
+  <Entete>
+    <CodeCollectivite>75000</CodeCollectivite>
+    <NomMairie>Saint-Martin</NomMairie>
+    <NumeroDossier>CCAS-DEC-2026-089</NumeroDossier>
+    <DateActe>2026-09-21</DateActe>
+  </Entete>
+  <Beneficiaire Anonymise="true">
+    <IDDossierSocial>DOS-8923</IDDossierSocial>
+    <NomFamille>DUPONT</NomFamille>
+    <StatutNIR>MASQUE_CONFORME_RGPD</StatutNIR>
+  </Beneficiaire>
+  <Decision>
+    <TypeAide>Secours Financier Urgence</TypeAide>
+    <MontantAccordes devise="EUR">450.00</MontantAccordes>
+    <ImputationBudgetaire>6568</ImputationBudgetaire>
+  </Decision>
+</DeliberationCCAS>`;
+
+        // Load multi-line prompt into textarea
+        function loadPrompt(key) {
+            const textarea = document.getElementById('promptInput');
+            if (promptTemplates[key]) {
+                textarea.value = promptTemplates[key];
+                textarea.focus();
+                showToast("Modèle de prompt Mairie chargé !");
+            }
+        }
+
+        // Append quick text
+        function appendPromptText(text) {
+            const textarea = document.getElementById('promptInput');
+            textarea.value = text;
+            textarea.focus();
+        }
+
+        function clearInput() {
+            document.getElementById('promptInput').value = '';
+        }
+
+        function resetChat() {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = `
+                <div class="bg-red-50 border border-bl-red/30 rounded-xl p-4 text-xs text-bl-darkRed flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="refresh-cw" class="w-4 h-4 text-bl-red"></i>
+                        <span>Nouvelle session réinitialisée. Prêt pour les requêtes administratives Mairie.</span>
+                    </div>
+                </div>
+            `;
+            lucide.createIcons();
+            showToast("Session réinitialisée");
+        }
+
+        // Handle Send Message logic
+        function sendMessage() {
+            const textarea = document.getElementById('promptInput');
+            const promptText = textarea.value.trim();
+
+            if (!promptText) return;
+
+            const chatMessages = document.getElementById('chatMessages');
+
+            // Render User Prompt with preservation of line breaks
+            const userHtml = `
+                <div class="flex gap-4 max-w-4xl ml-auto justify-end">
+                    <div class="flex-1 space-y-2 text-right">
+                        <div class="flex items-center gap-2 justify-end">
+                            <span class="text-[10px] text-slate-400">À l'instant</span>
+                            <span class="text-xs font-bold text-slate-700">Agent Mairie</span>
+                        </div>
+                        <div class="bg-slate-800 text-white border border-slate-700 rounded-2xl p-4 text-sm leading-relaxed inline-block text-left shadow-sm">
+                            <p class="whitespace-pre-line font-sans text-xs">${escapeHtml(promptText)}</p>
+                        </div>
+                    </div>
+                    <div class="w-9 h-9 rounded-xl bg-slate-700 text-white flex items-center justify-center shrink-0 font-bold text-xs shadow-sm">
+                        AG
+                    </div>
+                </div>
+            `;
+            chatMessages.insertAdjacentHTML('beforeend', userHtml);
+            textarea.value = '';
+
+            // Render Loading state
+            const loadingId = 'loading-' + Date.now();
+            const loadingHtml = `
+                <div id="${loadingId}" class="flex gap-4 max-w-4xl">
+                    <div class="w-9 h-9 rounded-xl bg-bl-red text-white flex items-center justify-center shrink-0 shadow-md font-bold text-sm">
+                        BL
+                    </div>
+                    <div class="bg-white border border-slate-200 rounded-2xl p-4 text-sm text-slate-500 flex items-center gap-3 shadow-sm">
+                        <div class="w-4 h-4 border-2 border-bl-red border-t-transparent rounded-full animate-spin"></div>
+                        <span>Albert analyse les directives territoriales et génère le document + schéma XML...</span>
+                    </div>
+                </div>
+            `;
+            chatMessages.insertAdjacentHTML('beforeend', loadingHtml);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            lucide.createIcons();
+
+            // Simulate Generation Delay
+            setTimeout(() => {
+                document.getElementById(loadingId).remove();
+                renderResponse(promptText);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 1800);
+        }
+
+        // Render AI Response with newly generated XML Snippet
+        function renderResponse(promptText) {
+            const chatMessages = document.getElementById('chatMessages');
+            const resId = 'res-' + Date.now();
+
+            // Dynamic XML creation based on query
+            currentXmlContent = `<?xml version="1.0" encoding="UTF-8"?>
+<ActeMunicipal xmlns="http://www.berger-levrault.fr/eActes/v1" DateGénération="${new Date().toISOString().split('T')[0]}">
+  <Metadonnees>
+    <Collectivite>MAIRIE DE SAINT-MARTIN</Collectivite>
+    <Classification>RGPD_NIVEAU_3_SENSIVITE</Classification>
+  </Metadonnees>
+  <ContenuActe>
+    <Objet>${escapeHtml(promptText.substring(0, 80))}...</Objet>
+    <StatutAnonymisation>VALIDE_DONNEES_SENSIBLES_PROTEGEES</StatutAnonymisation>
+  </ContenuActe>
+</ActeMunicipal>`;
+
+            const responseHtml = `
+                <div class="flex gap-4 max-w-4xl">
+                    <div class="w-9 h-9 rounded-xl bg-bl-red text-white flex items-center justify-center shrink-0 shadow-md font-bold text-sm">
+                        BL
+                    </div>
+                    <div class="flex-1 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-bold text-slate-900">Albert Mairie</span>
+                                <span class="bg-red-100 text-bl-red border border-bl-red/20 text-[10px] font-bold px-2 py-0.5 rounded">Traitement Communal Réussi</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button onclick="copyText('${resId}')" class="px-2.5 py-1 bg-white border border-slate-300 hover:border-slate-400 text-slate-700 text-xs rounded-lg flex items-center gap-1.5 transition-all shadow-sm">
+                                    <i data-lucide="copy" class="w-3.5 h-3.5 text-slate-500"></i>
+                                    Copier
+                                </button>
+                                <button onclick="downloadXmlFile()" class="px-2.5 py-1 bg-bl-red hover:bg-bl-hoverRed text-white text-xs rounded-lg font-medium flex items-center gap-1.5 transition-all shadow-sm">
+                                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                                    Télécharger Fichier XML (.xml)
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bg-white border border-slate-200 rounded-2xl p-5 text-sm text-slate-800 leading-relaxed space-y-4 shadow-sm" id="${resId}">
+                            
+                            <div class="bg-emerald-50 border-l-4 border-emerald-500 p-3 rounded-r-lg text-xs text-emerald-900 flex items-center gap-2">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                                <span>Conformité RGPD & CGCT vérifiée. Les identifiants personnels ont été isolés conformément aux directives de la CADA.</span>
+                            </div>
+
+                            <div class="border border-slate-200 rounded-xl p-4 bg-slate-50 space-y-2">
+                                <div class="font-bold text-xs text-bl-red uppercase">Document Administratif Officiel Rédactionnel</div>
+                                <div class="text-xs text-slate-700 leading-relaxed space-y-2 font-serif">
+                                    <p><strong>MAIRIE DE SAINT-MARTIN - SERVICE JURIDIQUE ET AFFAIRES GÉNÉRALES</strong></p>
+                                    <p>Suite à votre requête relative à : <em>"${escapeHtml(promptText.substring(0, 100))}..."</em></p>
+                                    <p>Il est préconisé d'appliquer le protocole de traitement automatisé avec archivage réglementaire dans le Progiciel Berger-Levrault.</p>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1">
+                                <span class="text-xs font-bold text-slate-700">Fichier XML de Structure Généré :</span>
+                                <pre class="bg-slate-900 text-red-300 p-3 rounded-xl text-[11px] font-mono overflow-x-auto"><code>${escapeHtml(currentXmlContent)}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            chatMessages.insertAdjacentHTML('beforeend', responseHtml);
+            lucide.createIcons();
+        }
+
+        // XML File Download Engine
+        function downloadXmlFile() {
+            const blob = new Blob([currentXmlContent], { type: 'text/xml;charset=utf-8;' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute("href", url);
+            link.setAttribute("download", "albert_berger_levrault_export.xml");
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            showToast("Fichier XML téléchargé avec succès !");
+        }
+
+        // Helper Copy Text
+        function copyText(elementId) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+
+            const textarea = document.createElement('textarea');
+            textarea.value = el.innerText;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast("Texte copié dans le presse-papier !");
+            } catch (err) {
+                showToast("Erreur lors de la copie.");
+            }
+            document.body.removeChild(textarea);
+        }
+
+        // Escape HTML Utility
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Notification Toast
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMessage');
+
+            toastMsg.innerText = msg;
+            toast.classList.remove('translate-y-10', 'opacity-0', 'pointer-events-none');
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-10', 'opacity-0', 'pointer-events-none');
+            }, 3000);
+        }
+
+        // Keyboard Shortcut (Shift+Enter for multi-line, Enter to submit)
+        document.getElementById('promptInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
